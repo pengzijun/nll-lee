@@ -1,48 +1,52 @@
 <template>
-    <el-row class="container">
-        <el-col :span="3" class="navBox">
-            <div class="logo"></div>
-            <el-menu
-                    :router='true'
-                    theme="dark"
-                    :default-active="defaultActive"
-                    :unique-opened="true"
-                    @open="handleOpen">
-
-                <el-submenu :index="item.path" v-for="item,index in navList">
-                    <template slot="title">{{item.name}}</template>
-                    <el-menu-item
-                            :index="itemSon.path"
-                            v-for="itemSon,indexSon in item.son">{{itemSon.name}}
-
-                    </el-menu-item>
-                </el-submenu>
-                </el-submenu>
-            </el-menu>
-
-        </el-col>
-        <el-col :span="21" class="content">
-            <router-view></router-view>
-        </el-col>
-    </el-row>
+    <div class="all-box">
+        <el-row>
+            <el-col :span="24" class="header">xxx管理系统</el-col>
+        </el-row>
+        <el-row class="main">
+            <el-col :span="3" class="nav-box">
+                <el-menu default-active="1-1-1" theme="dark" class="nav" @open="handleOpen" @close="handleClose">
+                    <el-submenu :index="item.index" v-for="item,index in navList">
+                        <template slot="title">{{item.title}}</template>
+                        <el-submenu :index="itemSon.index" v-for="itemSon,indexSon in item.son">
+                            <template slot="title">{{itemSon.title}}</template>
+                            <el-menu-item :index="itemSonSon.index" v-for="itemSonSon,indexSonSon in itemSon.sonSon">
+                                {{itemSonSon.title}}
+                            </el-menu-item>
+                        </el-submenu>
+                    </el-submenu>
+                </el-menu>
+            </el-col>
+            <el-col :span="21" :offset="3" class="container">
+                <router-view></router-view>
+            </el-col>
+        </el-row>
+    </div>
 </template>
-<style scoped rel="stylesheet/css" lang="less">
-    .container {
+<style rel="stylesheet/less" lang="less" scoped>
+    .all-box {
         height: 100%;
-        .navBox {
-            position: fixed;
-            z-index: 999;
-            background: #324157;
+    }
+    .main {
+        height: 100%;
+        padding-top: 80px;
+    }
+
+    .header {
+        background-image: linear-gradient(to right,#1278f6,#00b4aa);
+        height: 80px;
+        line-height: 80px;
+        font-size: 20px;
+        position: fixed;
+        z-index: 10;
+    }
+
+    .nav-box {
+        height: 100%;
+        background: #324157;
+        position: fixed;
+        .nav {
             height: 100%;
-            .logo {
-                height: 80px;
-                background-repeat: no-repeat;
-                background-position: center;
-            }
-        }
-        .content {
-            height: 100%;
-            margin-left: 12.5%;
         }
     }
 </style>
@@ -50,28 +54,53 @@
     export default {
         data(){
             return {
-                defaultActive: '/index/transaction/class-manage',
                 navList: [
                     {
-                        'name': '交易类业务管理',
-                        'path': 'transaction',
-                        'icon': '',
-                        'son': [{
-                            'name': '类目管理',
-                            'path': '/index/transaction/class-manage'
-                        }, {
-                            'name': '商品管理',
-                            'path': '/index/transaction/commodity-manage'
-                        }, {
-                            'name': '发布订单管理',
-                            'path': '/index/transaction/order-manage'
-                        }],
+                        title: "全部区域",
+                        url: "",
+                        index: '1',
+                        son: [
+                            {
+                                title: '石河子市',
+                                url: '',
+                                index: '1-1',
+                                sonSon: [
+                                    {
+                                        title: '站点一',
+                                        url: "",
+                                        index: '1-1-1'
+                                    }
+                                ]
+                            },
+                            {
+                                title: '抚顺市',
+                                url: '',
+                                index: '1-2',
+                                sonSon: [
+                                    {
+                                        title: '站点二',
+                                        url: "",
+                                        index: '1-2-1'
+                                    }
+                                ]
+                            }
+                        ]
                     },
-                ]
+                    {
+                        title: '用户管理',
+                        url: '',
+                        index: "2"
+                    }
+                ],//nav 循环的数组
+
             }
         },
         methods: {
+
             handleOpen(key, keyPath) {
+                console.log(key, keyPath);
+            },
+            handleClose(key, keyPath) {
                 console.log(key, keyPath);
             }
         }

@@ -9,25 +9,35 @@ const routers =
         {
             path: '/index',
             component: require('components/index/index'),
-            redirect: '/index/transaction/class-manage',
+            redirect:'/index/city',
             children: [
                 {
-                    path: 'transaction',
-                    redirect: 'transaction/class-manage',
-                    component: require('components/transaction/index'),
+                    path: 'city',
+                    component: require('components/city/index'),
+                    redirect:'/index/city/station',
                     children: [
                         {
-                            path: 'class-manage',
-                            component: require('components/transaction/class-manage/index'),
-                            meta: {activeIndex: 0} /**标志为当前选中的列表*/
-                        },
-                        {
-                            path: 'order-manage',
-                            component: require('components/transaction/order-manage/index'),
-                        },
-                        {
-                            path: 'commodity-manage',
-                            component: require('components/transaction/commodity-manage/index'),
+                            path: 'station',
+                            component: require('components/city/station/index'),
+                            redirect:'/index/city/station/system-mode',
+                            children: [
+                                {
+                                    path: 'system-mode',
+                                    component: require('components/common/system-mode')
+                                }, {
+                                    path: 'valve-setting',
+                                    component: require('components/common/valve-setting')
+                                }, {
+                                    path: 'temperature-setting',
+                                    component: require('components/common/temperature-setting')
+                                }, {
+                                    path: 'time-setting',
+                                    component: require('components/common/time-setting')
+                                }, {
+                                    path: 'history-data',
+                                    component: require('components/common/history-data')
+                                }
+                            ]
                         }
                     ]
                 }
