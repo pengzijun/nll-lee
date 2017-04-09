@@ -55,7 +55,6 @@ router.get("/menu", (req, res) => {
         })
     }
     else if (user === "1") {
-        console.log(1)
         array.push({"name": "修改密码"});
         array.push({"name": "区域和站点管理", "target": "_self"})
         //1 区域管理员

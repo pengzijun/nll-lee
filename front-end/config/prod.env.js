@@ -1,6 +1,6 @@
 module.exports = {
     NODE_ENV: '"production"',
     http: {
-        root: "'http://api.bi.yabibuy.com/'"
+        root: "'127.0.0.1:8899'"
     }
 };

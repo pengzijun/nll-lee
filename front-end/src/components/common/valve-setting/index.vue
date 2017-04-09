@@ -71,12 +71,12 @@
             <el-col :span="8" class="col">
                 <el-card :body-style="bodyStyle">
                     <div slot="header">
-                        <span>最大开度</span>
+                        <span>最小开度</span>
                     </div>
                     <vue-slider
                             :class="slider.class"
                             ref="slider"
-                            v-model="slider.max"
+                            v-model="slider.min"
                             :direction="slider.direction"
                             :height="slider.height"
                             :width="slider.width"
