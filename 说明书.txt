@@ -1,0 +1,10 @@
+front-end 前端  
+
+npm run dev / yarn run dev 启动
+
+npm run build    打包 dist
+
+
+server
+
+node app.js ---> localhost:8899
