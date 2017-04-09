@@ -4,7 +4,7 @@
             <el-row class="loginForm">
                 <div class="formBox">
                     <div class="warp" @keyup.enter="submitForm">
-                        <h1>欢迎登陆妇儿医院后台管理</h1>
+                        <h1>欢迎登陆xxx后台管理</h1>
                         <el-form :model="user" :rules="rules" ref="ruleForm" >
                             <el-form-item prop="name">
                                 <el-input v-model="user.name" placeholder="请输入用户名"></el-input>
@@ -52,30 +52,29 @@
         },
         methods: {
             submitForm() {
-//                this.$http.post('api/user/login', {
-//                    username: this.user.name,
-//                    password: this.user.pwd
-//                }, {
-//                    emulateJSON: true
-//                }).then((res) => {
-//                    if (res.data) {
-//                        if (res.data.code == "0") {
-//                            let userToken = res.data.data.token + ''
-//                            this.$app.cookie.set('userToken', userToken, res.data.expire)
-//                            this.$router.push('index')
-//                        } else {
-//                            this.user.pwd = ''
-//                            this.isErr = true
-//                        }
-//                    } else {
-//                        this.user.pwd = ''
-//                        this.isErr = true
-//                    }
-                    this.$router.push('index')
-//                })
+                this.$http.post('api/login', {
+                    username: this.user.name,
+                    password: this.user.pwd
+                }, {
+                    emulateJSON: true
+                }).then((res) => {
+                    if (res.data) {
+                        if (res.data.code === 1) {
+                            let userToken = res.data.flag + '';
+                            this.$app.cookie.set('userToken', userToken);
+                            this.$router.push('index')
+                        } else {
+                            this.user.pwd = '';
+                            this.isErr = true
+                        }
+                    } else {
+                        this.user.pwd = '';
+                        this.isErr = true
+                    }
+                })
             },
             resetForm() {
-                this.user.name = ''
+                this.user.name = '';
                 this.user.pwd = ''
             }
         }

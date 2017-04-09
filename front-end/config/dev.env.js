@@ -4,6 +4,6 @@ var prodEnv = require('./prod.env')
 module.exports = merge(prodEnv, {
     NODE_ENV: '"development"',
     http: {
-        root: "'http://192.168.0.90:22025'"
+        root: "'http://127.0.0.1:8899'"
     }
 });

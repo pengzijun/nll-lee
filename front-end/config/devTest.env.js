@@ -4,6 +4,6 @@
 module.exports = {
     NODE_ENV: '"devTest"',
     http: {
-        root: "'http://192.168.0.90:22025'"
+        root: "'http://127.0.0.1:8899'"
     }
 };
