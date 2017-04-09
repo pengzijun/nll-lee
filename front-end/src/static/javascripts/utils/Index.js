@@ -46,5 +46,5 @@ const
             }
             return f;
         },
-    }
+    };
 export  default Utils;

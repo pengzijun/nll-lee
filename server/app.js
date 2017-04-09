@@ -12,9 +12,6 @@ const bodyparser = require("body-parser");
 //处理application/x-www-form-urlencoded的 parser
 app.use(bodyparser.urlencoded({extended: false}));
 
-
-
-
 //设置跨域
 app.all('*', function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -22,7 +19,6 @@ app.all('*', function (req, res, next) {
     res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
     next()
 });
-
 
 //设置orm
 const orm = require("orm");

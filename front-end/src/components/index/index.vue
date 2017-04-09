@@ -5,13 +5,19 @@
         </el-row>
         <el-row class="main">
             <el-col :span="3" class="nav-box">
-                <el-menu default-active="1-1-1" theme="dark" class="nav" @open="handleOpen" @close="handleClose">
+                <el-menu default-active="1-1-1" theme="dark" class="nav">
                     <el-submenu :index="item.index" v-for="item,index in navList">
                         <template slot="title">{{item.title}}</template>
                         <el-submenu :index="itemSon.index" v-for="itemSon,indexSon in item.son">
                             <template slot="title">{{itemSon.title}}</template>
                             <el-menu-item :index="itemSonSon.index" v-for="itemSonSon,indexSonSon in itemSon.sonSon">
                                 {{itemSonSon.title}}
+
+
+
+
+
+
                             </el-menu-item>
                         </el-submenu>
                     </el-submenu>
@@ -27,13 +33,14 @@
     .all-box {
         height: 100%;
     }
+
     .main {
         height: 100%;
         padding-top: 80px;
     }
 
     .header {
-        background-image: linear-gradient(to right,#1278f6,#00b4aa);
+        background-image: linear-gradient(to right, #1278f6, #00b4aa);
         height: 80px;
         line-height: 80px;
         font-size: 20px;
@@ -96,13 +103,38 @@
             }
         },
         methods: {
-
-            handleOpen(key, keyPath) {
-                console.log(key, keyPath);
-            },
-            handleClose(key, keyPath) {
-                console.log(key, keyPath);
+            getMenu(){
+                this.$http.get('api/menu').then(res => {
+                    let data = res.body;
+                    this.navList = data.map((val, index) => {
+                        return {
+                            title: val.name,
+                            index: index + '',
+                            son: (() => {
+                                val.children = val.children || [];
+                                return val.children.map((sonVal, sonIndex) => {
+                                    return {
+                                        title: sonVal.name,
+                                        index: index + "-" + sonIndex,
+                                        sonSon: (() => {
+                                            sonVal.children = sonVal.children || [];
+                                            return sonVal.children.map((sonSonVal, sonSonIndex) => {
+                                                return {
+                                                    title: sonSonVal.name,
+                                                    index: index + "-" + sonIndex + "-" + sonSonIndex
+                                                }
+                                            })
+                                        })()
+                                    }
+                                })
+                            })()
+                        }
+                    })
+                })
             }
+        },
+        created(){
+            this.getMenu()
         }
     }
 </script>

@@ -3,13 +3,13 @@
         <el-row class="line">
             <el-col :span="24" class="box">
                 <div class="title">{{time}}</div>
-                <el-button>同步时间</el-button>
+                <el-button @click="getTime">同步时间</el-button>
             </el-col>
         </el-row>
         <el-row class="line">
             <el-col :span="24" class="box">
-                <div class="title">{{outSideTemp}}</div>
-                <el-button>立即更新</el-button>
+                <div class="title">室外温度:{{outSideTemp}}</div>
+                <el-button @click="reFlash">立即更新</el-button>
             </el-col>
         </el-row>
         <el-row :gutter="30" class="line">
@@ -52,6 +52,7 @@
     .line {
         margin-bottom: 50px;
     }
+
     .box {
         height: 80px;
         line-height: 80px;
@@ -63,26 +64,28 @@
             margin-right: 30px;
         }
     }
-.state {
-    height: 120px;
-    border: 1px solid #D1DBE5;
-    border-radius: 3px;
-    .run {
-        height: 60px;
-        line-height: 60px;
-        margin-left: 30px;
+
+    .state {
+        height: 120px;
+        border: 1px solid #D1DBE5;
+        border-radius: 3px;
+        .run {
+            height: 60px;
+            line-height: 60px;
+            margin-left: 30px;
+        }
     }
-}
 
 </style>
 <script>
+    import utils from "javascripts/utils/index.js"
     export default{
         data(){
             return {
                 time: '2016-01-01 11:11:51',
                 outSideTemp: '22',
-                runState:'手动',
-                runMode:'正常',
+                runState: '手动',
+                runMode: '正常',
                 tableData: [
                     {
                         title: 'a',
@@ -129,6 +132,22 @@
                 ]
             }
         },
-        components: {}
+        methods: {
+            getTime(){
+                this.$http.get("api/sites/getTime").then(res => {
+                    this.time = utils.toTimeFormat(res.body.time, "yyyy-MM-dd hh:mm:ss")
+                })
+            },
+            reFlash(){
+                this.$http.get('api/menu').then(res => {
+                    debugger
+                })
+            }
+        },
+        created(){
+//            setInterval(() => {
+                this.getTime()
+//            }, 1000);
+        }
     }
 </script>
